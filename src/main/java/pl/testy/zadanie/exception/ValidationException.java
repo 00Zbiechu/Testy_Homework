@@ -1,4 +1,4 @@
-package pl.testy.zadanie.validator;
+package pl.testy.zadanie.exception;
 
 import pl.testy.zadanie.MessageCollector;
 

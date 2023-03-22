@@ -42,21 +42,31 @@ class PersonValidatorTest {
         return new String(array, StandardCharsets.UTF_8);
     }
 
+
+
+
+
+
     @Test
     @DisplayName("Validation personDTO with Error should return exception with message")
     public void validateTest1(){
         //given
-        PersonDTO personDTO = new PersonDTO(1L,"TEST","TEST",null);
+        PersonDTO personDTO = new PersonDTO(1L,"TEST","TEST",1);
 
         //when
         Throwable exception = assertThrows(ValidationException.class,
                 () -> personValidator.validate(personDTO,messageCollector,true));
 
         //then
-        assertEquals("PersonDTO.age is null",exception.getMessage());
+        assertEquals("PersonDTO.age field value must be greater or equal 18",exception.getMessage());
 
 
     }
+
+
+
+
+
 
 
 
@@ -74,10 +84,8 @@ class PersonValidatorTest {
     }
 
 
-
     public static Stream<Arguments> getValidateTestArguments(){
         return Stream.of(
-                Arguments.of(new PersonDTO(),true), //null personDTO - has Error
 
                 Arguments.of(new PersonDTO(1L,getShortString(),"Test",19),true),//too short name - has Error
                 Arguments.of(new PersonDTO(1L,"Test",getShortString(),19),true), //too short lastName - has Error
@@ -89,6 +97,37 @@ class PersonValidatorTest {
 
                 Arguments.of(new PersonDTO(1L,"Test","Test",19),false) //OK - without Errors
         );
+    }
+
+
+
+
+
+
+
+
+    @ParameterizedTest(name = "Validate personDTO = {0} should return NullPointerException")
+    @MethodSource("getValidatesTestArgumentsWithNull")
+    public void validateTest3(PersonDTO personDTO){
+
+        Assertions.assertThrows(NullPointerException.class,()->personValidator.validate(personDTO,messageCollector,false));
+
+    }
+
+
+
+    public static Stream<Arguments> getValidatesTestArgumentsWithNull(){
+
+        return Stream.of(
+
+                Arguments.of((Object) null),
+                Arguments.of(new PersonDTO(1L,getShortString(),getShortString(),null)),
+                Arguments.of(new PersonDTO(1L,getShortString(),null,19)),
+                Arguments.of(new PersonDTO(1L,null,"Test",19))
+
+
+        );
+
     }
 
 

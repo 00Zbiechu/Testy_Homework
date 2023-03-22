@@ -19,9 +19,7 @@ public class PersonValidator {
 
 	private void validateFirstName(PersonDTO personDTO, MessageCollector messageCollector) {
 
-		if(personDTO.getFirstName()==null){
-			messageCollector.addError("PersonDTO.firstName is null");
-		}else if(personDTO.getFirstName().length() > 100){
+		if(personDTO.getFirstName().length() > 100){
 			messageCollector.addError("PersonDTO.firstName field value too long");
 		}else if(personDTO.getFirstName().length() < 2){
 			messageCollector.addError("PersonDTO.firstName field value too short");
@@ -30,9 +28,8 @@ public class PersonValidator {
 
 	private void validateLastName(PersonDTO personDTO, MessageCollector messageCollector) {
 
-		if(personDTO.getLastName()==null){
-			messageCollector.addError("PersonDTO.lastName is null");
-		}else if(personDTO.getLastName().length() > 200){
+
+		if(personDTO.getLastName().length() > 200){
 			messageCollector.addError("PersonDTO.lastName field value too long");
 		}else if(personDTO.getLastName().length() < 2){
 			messageCollector.addError("PersonDTO.lastName field value too short");
@@ -41,9 +38,7 @@ public class PersonValidator {
 
 	private void validateAge(PersonDTO personDTO, MessageCollector messageCollector) {
 
-		if(personDTO.getAge()==null){
-			messageCollector.addError("PersonDTO.age is null");
-		}else if(personDTO.getAge() < 18){
+		if(personDTO.getAge() < 18){
 			messageCollector.addError("PersonDTO.age field value must be greater or equal 18");
 		}
 	}
